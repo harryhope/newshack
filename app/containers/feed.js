@@ -1,6 +1,7 @@
 import React from 'react'
+import {withRouter} from 'react-router-dom'
 import styled from 'styled-components'
-import Title from '../components/title'
+import Title from 'components/title'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,10 +12,11 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const Feed = props =>
+const Feed = withRouter(props =>
   <Wrapper>
     <Title>Newshack</Title>
-    <span>Welcome Home</span>
+    <span>{props.location.pathname}</span>
   </Wrapper>
+)
 
 export default Feed

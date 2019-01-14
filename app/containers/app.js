@@ -43,7 +43,7 @@ const App = () =>
     <Switch>
       <Route
         exact
-        path='/'
+        path='/:page(|new|show|ask|jobs)'
         component={Feed}
       />
       <Route
