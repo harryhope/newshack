@@ -21,6 +21,14 @@ const base = {
     ]
   },
   resolve: {
+    alias: {
+      assets: path.resolve(__dirname, 'app/assets'),
+      store: path.resolve(__dirname, 'app/store'),
+      styles: path.resolve(__dirname, 'app/styles'),
+      components: path.resolve(__dirname, 'app/components'),
+      containers: path.resolve(__dirname, 'app/containers'),
+      utils: path.resolve(__dirname, 'app/utils')
+    },
     extensions: ['.js', '.jsx', '.json']
   },
   plugins: [

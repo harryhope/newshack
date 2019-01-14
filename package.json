@@ -1,7 +1,7 @@
 {
-  "name": "reactor",
+  "name": "newshack",
   "version": "1.0.0",
-  "description": "Just another react boilerplate",
+  "description": "Just another hacker news client",
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && npm run test:jest",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/harryhope/reactor.git"
+    "url": "git+https://github.com/harryhope/newshack.git"
   },
   "keywords": [
     "react",
@@ -25,9 +25,19 @@
   "author": "Harry Hope",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/harryhope/reactor/issues"
+    "url": "https://github.com/harryhope/newshack/issues"
   },
-  "homepage": "https://github.com/harryhope/reactor#readme",
+  "homepage": "https://github.com/harryhope/newshack#readme",
+  "jest": {
+    "moduleNameMapper": {
+      "^assets(.*)$": "<rootDir>/app/assets$1",
+      "^store(.*)$": "<rootDir>/app/store$1",
+      "^styles(.*)$": "<rootDir>/app/styles$1",
+      "^components(.*)$": "<rootDir>/app/components$1",
+      "^containers(.*)$": "<rootDir>/app/containers$1",
+      "^utils(.*)$": "<rootDir>/app/utils$1"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -73,6 +83,7 @@
     "redux": "^4.0.0",
     "redux-updeep": "^0.1.1",
     "styled-components": "^4.0.3",
-    "styled-normalize": "^4.0.0"
+    "styled-normalize": "^4.0.0",
+    "superagent": "^4.1.0"
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Title from '../components/title'
-import Welcome from '../assets/welcome'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -10,16 +9,12 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  span {
-    display: none
-  }
 `
 
-const Home = props =>
+const Feed = props =>
   <Wrapper>
-    <Title>Reactor Home</Title>
+    <Title>Newshack</Title>
     <span>Welcome Home</span>
-    <Welcome />
   </Wrapper>
 
-export default Home
+export default Feed

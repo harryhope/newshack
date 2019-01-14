@@ -2,42 +2,49 @@ import React from 'react'
 import {Switch, Route} from 'react-router-dom'
 import styled, {createGlobalStyle} from 'styled-components'
 import styledNormalize from 'styled-normalize'
-import Home from '../containers/home'
-import Error from '../containers/error'
+import Nav from 'components/nav'
+import Feed from 'containers/feed'
+import Error from 'containers/error'
+import {colors, fonts} from 'styles/variables'
 
 const GlobalStyle = createGlobalStyle`
   ${styledNormalize}
 
   html {
     width: 100%;
-    height: 100%;
     box-sizing: border-box;
   }
 
   body, #app {
     width: 100%;
-    height: 100%;
+    font-family: ${fonts.sans};
+    font-size: 16px;
+    color: ${colors.dark}
   }
 
   *, *:before, *:after {
     box-sizing: inherit;
   }
+
+  a {
+    text-decoration: none;
+  }
 `
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
   position: relative;
 `
 
 const App = () =>
   <Wrapper>
     <GlobalStyle />
+    <Nav />
     <Switch>
       <Route
         exact
         path='/'
-        component={Home}
+        component={Feed}
       />
       <Route
         path='*'
