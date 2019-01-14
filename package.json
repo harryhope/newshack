@@ -1,0 +1,78 @@
+{
+  "name": "reactor",
+  "version": "1.0.0",
+  "description": "Just another react boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint && npm run test:jest",
+    "test:jest": "npx jest --coverage",
+    "dev": "npx webpack-dev-server --mode development",
+    "build": "npx webpack -p",
+    "lint": "npx eslint . --ext .jsx,.js --ignore-pattern '/dist/*'",
+    "lint:fix": "npx eslint --fix . --ext .jsx,.js --ignore-pattern '/dist/*'",
+    "profile": "webpack -p --profile --json > ./dist/stats.json && webpack-bundle-analyzer ./dist/stats.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harryhope/reactor.git"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "es6",
+    "boilerplate"
+  ],
+  "author": "Harry Hope",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/harryhope/reactor/issues"
+  },
+  "homepage": "https://github.com/harryhope/reactor#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^9.0.0",
+    "babel-jest": "^23.0.1",
+    "babel-loader": "^8.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.9.1",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^23.6.0",
+    "lodash-webpack-plugin": "^0.11.5",
+    "progress-bar-webpack-plugin": "harryhope/progress-bar-webpack-plugin",
+    "webpack": "^4.12.0",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.1.3"
+  },
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-updeep": "^0.1.1",
+    "styled-components": "^4.0.3",
+    "styled-normalize": "^4.0.0"
+  }
+}
