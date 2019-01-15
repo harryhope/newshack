@@ -1,5 +1,5 @@
 import React from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import styled, {createGlobalStyle} from 'styled-components'
 import styledNormalize from 'styled-normalize'
 import Nav from 'components/nav'
@@ -43,11 +43,21 @@ const App = () =>
     <Switch>
       <Route
         exact
-        path='/:page(|new|show|ask|jobs)'
-        component={Feed}
+        path='/'
+        render={() => <Redirect to='/top' />}
       />
+      {[
+        '/:page(top|new|show|ask|jobs)',
+        '/:page(top|new|show|ask|jobs)/:number'
+      ].map((path, index) =>
+        <Route
+          exact
+          key={index}
+          path={path}
+          component={Feed}
+        />
+      )}
       <Route
-        path='*'
         component={Error}
       />
     </Switch>

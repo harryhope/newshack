@@ -48,11 +48,11 @@ const Links = styled.nav`
 const Nav = () =>
   <Spacer>
     <Wrapper>
-      <Link to="/">
+      <Link to="/top">
         <Logo />
       </Link>
       <Links>
-        <NavLink exact to="/">Top</NavLink>
+        <NavLink exact to="/top">Top</NavLink>
         <NavLink to="/new">New</NavLink>
         <NavLink to="/show">Show</NavLink>
         <NavLink to="/ask">Ask</NavLink>

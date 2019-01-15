@@ -1,0 +1,23 @@
+import styled from 'styled-components'
+import {colors} from 'styles/variables'
+
+const Spinner = styled.div`
+  width: 24px;
+  height: 24px;
+  border: 3px solid #eee;
+  border-radius: 50%;
+  border-top-color: ${colors.primary};
+  animation-name: spin;
+  animation-duration: .6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  @keyframes spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+  }
+`
+
+export default Spinner
