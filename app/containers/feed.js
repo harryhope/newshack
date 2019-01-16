@@ -34,7 +34,7 @@ const Loader = () =>
   </Overlay>
 
 class Feed extends Component {
-  componentDidUpdate() {
+  componentDidUpdate () {
     if (this.props.location.pathname !== this.props.source) {
       publish('Change Data Source', {
         source: this.props.location.pathname,
@@ -43,7 +43,7 @@ class Feed extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <Wrapper>
         {console.log(this.props.match)}
