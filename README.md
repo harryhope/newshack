@@ -1,13 +1,5 @@
-# ☢️ reactor
-Just another react boilerplate.
-
-**Includes:**
-- :rocket: Webpack 4.x
-- :u7a7a: Babel with ES Stage-2 Features
-- :fireworks: ESLint using Standard JS
-- :volcano: Jest and Enzyme for tests
-- :nail_care: Styled Components
-- :earth_americas: React Router 4.x
+# 🗞 newshack 💻 
+Just another hacker news client.
 
 ## Getting Started
 Clone the repository and make sure you have `node` installed.
