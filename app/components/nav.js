@@ -52,7 +52,7 @@ const Nav = () =>
         <Logo />
       </Link>
       <Links>
-        <NavLink exact to='/top'>Top</NavLink>
+        <NavLink to='/top'>Top</NavLink>
         <NavLink to='/new'>New</NavLink>
         <NavLink to='/show'>Show</NavLink>
         <NavLink to='/ask'>Ask</NavLink>
