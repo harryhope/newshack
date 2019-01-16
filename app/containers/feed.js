@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import styled from 'styled-components'
 import Title from 'components/title'
 import Spinner from 'components/spinner'
@@ -112,7 +111,7 @@ class Feed extends Component {
     this.updateSource()
   }
 
-  updateSource() {
+  updateSource () {
     const {page, number = 0} = this.props.match.params
     const handleError = () => publish('Err', {op: ops.ERRORING})
     if (page !== this.props.page || number !== this.props.number) {
@@ -140,7 +139,6 @@ class Feed extends Component {
         .then(resp => publish('populate', {items: resp, isLoading: false}))
         .catch(handleError)
     }
-
   }
 
   render () {

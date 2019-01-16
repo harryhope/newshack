@@ -1,15 +1,16 @@
 import React from 'react'
 import Enzyme, {shallow} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Home from '../app/containers/home'
+import Feed from '../app/containers/feed'
+import {store} from 'store'
 
 Enzyme.configure({adapter: new Adapter()})
 
 describe('Containers', () => {
-  describe('Home', () => {
+  describe('Feed', () => {
     it('should greet users', () => {
-      const wrapper = shallow(<Home />)
-      expect(wrapper.find('span').text()).toEqual('Welcome Home')
+      const wrapper = shallow(<Feed store={store} />)
+      expect(wrapper).not.toEqual(null)
     })
   })
 })
