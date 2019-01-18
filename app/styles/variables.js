@@ -3,7 +3,8 @@ export const colors = {
   dark: '#242424',
   primary: '#50C4ED',
   border: '#E6E4E4',
-  lightText: '#606060'
+  lightText: '#606060',
+  lighterText: '#888'
 }
 
 export const fonts = {

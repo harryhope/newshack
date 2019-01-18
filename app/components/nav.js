@@ -23,6 +23,16 @@ const Wrapper = styled.header`
   left: 0;
   z-index: 1;
   font-size: 14px;
+  a {
+    color: ${colors.light};
+    padding: 0 8px;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+  }
+  a:hover {
+    background: rgba(0,0,0,.3);
+  }
 `
 
 const Links = styled.nav`
@@ -32,13 +42,6 @@ const Links = styled.nav`
   position: relative;
   left: -10px;
   display: flex;
-  a {
-    color: ${colors.light};
-    padding: 0 8px;
-    height: 100%;
-    display: inline-flex;
-    align-items: center;
-  }
   .active {
     font-weight: 700;
     border-bottom: 3px solid ${colors.primary};

@@ -72,6 +72,7 @@ const Headline = styled.a`
   padding: 4px 0;
   margin: 4px 0;
   display: inline-block;
+
   @media (min-width: 960px) {
     font-size: 24px;
   }
@@ -104,6 +105,13 @@ const Details = styled.div`
   padding-bottom: 4px;
   display: block;
   color: ${colors.lightText};
+  span {
+      font-size: 11px;
+      color: ${colors.lighterText};
+      border-left: 1px solid ${colors.border};
+      padding-left: 4px;
+      margin-left: 4px;
+  }
 `
 
 const List = props =>
@@ -116,7 +124,7 @@ const List = props =>
         </div>
         <div>
           <Headline href={item.url}>{item.title}</Headline>
-          <Details>Posted by <strong>{item.by}</strong> {timeSince(new Date(item.time * 1000))} ago.</Details>
+          <Details>Posted by <strong>{item.by}</strong> {timeSince(new Date(item.time * 1000))} ago. <span>{new URL(item.url).hostname}</span></Details>
         </div>
       </ListItem>
     )}
