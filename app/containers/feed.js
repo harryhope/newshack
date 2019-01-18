@@ -128,7 +128,7 @@ const List = props =>
         </div>
       </ListItem>
     )}
-    <More href={`/${props.page}/${Number(props.number) + 1}`}>More</More>
+    <More href={`/newshack/${props.page}/${Number(props.number) + 1}`}>More</More>
   </Wrapper>
 
 const Loader = () =>

@@ -8,7 +8,7 @@ const base = {
   entry: './app/index.js',
   output: {
     path: path.join(__dirname, '/dist'),
-    publicPath: '/dist',
+    publicPath: '/newshack/dist',
     filename: 'bundle.js'
   },
   module: {
