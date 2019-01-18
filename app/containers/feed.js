@@ -104,7 +104,6 @@ const Details = styled.div`
   padding-bottom: 4px;
   display: block;
   color: ${colors.lightText};
-
 `
 
 const List = props =>
@@ -117,7 +116,7 @@ const List = props =>
         </div>
         <div>
           <Headline href={item.url}>{item.title}</Headline>
-          <Details>{item.score} point{item.score > 1 && 's'} by {item.by}</Details>
+          <Details>Posted by <strong>{item.by}</strong> {timeSince(new Date(item.time * 1000))} ago.</Details>
         </div>
       </ListItem>
     )}

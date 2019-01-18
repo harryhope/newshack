@@ -56,7 +56,7 @@ const Nav = () =>
         <NavLink to='/new'>New</NavLink>
         <NavLink to='/show'>Show</NavLink>
         <NavLink to='/ask'>Ask</NavLink>
-        <NavLink to='/jobs'>Jobs</NavLink>
+        <NavLink to='/job'>Jobs</NavLink>
       </Links>
     </Wrapper>
   </Spacer>

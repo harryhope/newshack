@@ -1,25 +1,29 @@
-module.exports.timeSince = date => {
-  const seconds = Math.floor((new Date() - date) / 1000);
-  const interval = Math.floor(seconds / 31536000);
+const format = (string, interval) =>
+  interval === 1 ? ` ${string}` : ` ${string}s`
 
-  if (interval > 1) {
-    return interval + " years";
+module.exports.timeSince = date => {
+  console.log(date)
+  const seconds = Math.floor((new Date() - date) / 1000)
+  let interval = Math.floor(seconds / 31536000)
+
+  if (interval >= 1) {
+    return interval + format('year', interval)
   }
-  interval = Math.floor(seconds / 2592000);
-  if (interval > 1) {
-    return interval + " months";
+  interval = Math.floor(seconds / 2592000)
+  if (interval >= 1) {
+    return interval + format('month', interval)
   }
-  interval = Math.floor(seconds / 86400);
-  if (interval > 1) {
-    return interval + " days";
+  interval = Math.floor(seconds / 86400)
+  if (interval >= 1) {
+    return interval + format('day', interval)
   }
-  interval = Math.floor(seconds / 3600);
-  if (interval > 1) {
-    return interval + " hours";
+  interval = Math.floor(seconds / 3600)
+  if (interval >= 1) {
+    return interval + format('hour', interval)
   }
-  interval = Math.floor(seconds / 60);
-  if (interval > 1) {
-    return interval + " minutes";
+  interval = Math.floor(seconds / 60)
+  if (interval >= 1) {
+    return interval + format('minute', interval)
   }
-  return Math.floor(seconds) + " seconds";
+  return Math.floor(seconds) + format('second', interval)
 }

@@ -47,8 +47,8 @@ const App = () =>
         render={() => <Redirect to='/top' />}
       />
       {[
-        '/:page(top|new|show|ask|jobs)',
-        '/:page(top|new|show|ask|jobs)/:number'
+        '/:page(top|new|show|ask|job)',
+        '/:page(top|new|show|ask|job)/:number'
       ].map((path, index) =>
         <Route
           exact
