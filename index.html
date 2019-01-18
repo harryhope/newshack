@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript">
       (function(d) {
-      var x = d.createElement('link')
-      var y = d.getElementsByTagName('script')[0]
-      x.rel = 'stylesheet'
-      x.href = 'https://rsms.me/inter/inter-ui.css'
-      y.parentNode.insertBefore(x, y)
+        // Support SPAs on GH Pages
+        var redirect = sessionStorage.redirect
+        delete sessionStorage.redirect
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect)
+        }
+        // Load Fonts
+        var x = d.createElement('link')
+        var y = d.getElementsByTagName('script')[0]
+        x.rel = 'stylesheet'
+        x.href = 'https://rsms.me/inter/inter-ui.css'
+        y.parentNode.insertBefore(x, y)
       })(document)
     </script>
   </head>

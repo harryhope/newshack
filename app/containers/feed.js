@@ -124,7 +124,7 @@ const List = props =>
         </div>
         <div>
           <Headline href={item.url}>{item.title}</Headline>
-          <Details>Posted by <strong>{item.by}</strong> {timeSince(new Date(item.time * 1000))} ago. <span>{new URL(item.url).hostname}</span></Details>
+          <Details>Posted by <strong>{item.by}</strong> {timeSince(new Date(item.time * 1000))} ago. <span>{item.url && new URL(item.url).hostname}</span></Details>
         </div>
       </ListItem>
     )}
