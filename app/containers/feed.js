@@ -5,6 +5,7 @@ import Title from 'components/title'
 import Spinner from 'components/spinner'
 import {publish} from 'store'
 import {colors} from 'styles/variables'
+import {timeSince} from 'utils/time'
 import {getFeed, paginate, hydrate} from 'utils/api-client'
 
 const ops = {
@@ -38,6 +39,30 @@ const ListItem = styled.div`
   padding: 8px 0;
   border-bottom: 1px solid ${colors.border};
   display: flex;
+  &:last-of-type {
+    border-bottom: none;
+  }
+`
+
+const More = styled.a`
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  border: 1px solid rgba(0,0,0,.18);
+  color: ${colors.dark};
+  display: block;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 1px 1px rgba(0,0,0,.08);
+  margin-top: 24px;
+  &:hover {
+    background: rgba(0,0,0,.02);
+  }
+  &:active {
+    background: rgba(0,0,0,.06);
+  }
 `
 
 const Headline = styled.a`
@@ -85,16 +110,18 @@ const Details = styled.div`
 const List = props =>
   <Wrapper>
     {props.items.map(item =>
-      <ListItem>
+      <ListItem key={item.id}>
         <div>
+          {console.log(item)}
           <Capsule>{item.score}</Capsule>
         </div>
         <div>
-          <Headline key={item.id} href={item.url}>{item.title}</Headline>
+          <Headline href={item.url}>{item.title}</Headline>
           <Details>{item.score} point{item.score > 1 && 's'} by {item.by}</Details>
         </div>
       </ListItem>
     )}
+    <More href={`/${props.page}/${Number(props.number) + 1}`}>More</More>
   </Wrapper>
 
 const Loader = () =>
