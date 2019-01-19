@@ -119,7 +119,6 @@ const List = props =>
     {props.items.map(item =>
       <ListItem key={item.id}>
         <div>
-          {console.log(item)}
           <Capsule>{item.score}</Capsule>
         </div>
         <div>
