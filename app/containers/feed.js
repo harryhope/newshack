@@ -48,6 +48,7 @@ const More = styled.a`
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  margin-bottom: 60px;
   border: 1px solid rgba(0,0,0,.18);
   color: ${colors.dark};
   display: block;
