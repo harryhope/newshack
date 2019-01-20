@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import Title from 'components/title'
 import Spinner from 'components/spinner'
@@ -44,7 +45,7 @@ const ListItem = styled.div`
   }
 `
 
-const More = styled.a`
+const More = styled(Link)`
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -128,7 +129,7 @@ const List = props =>
         </div>
       </ListItem>
     )}
-    <More href={`/newshack/${props.page}/${Number(props.number) + 1}`}>More</More>
+    <More to={`/${props.page}/${Number(props.number) + 1}`}>More</More>
   </Wrapper>
 
 const Loader = () =>
