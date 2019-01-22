@@ -12,7 +12,6 @@ import {
   Headline,
   Capsule,
   Sitename,
-  ListItem,
   Button,
   Centered
 } from 'styles/mixins'
@@ -105,7 +104,7 @@ const Kid = props =>
     <Byline><strong>{props.by}</strong> <span>{timeSince(new Date(props.time * 1000))} ago.</span></Byline>
     <Text dangerouslySetInnerHTML={{__html: props.text}}></Text>
     {props.kids && !props.expanded && props.kids.length > 0
-      && <Centered><Button onClick={() => expand(props)}>{props.kids.length} Replies</Button></Centered>
+      && <Centered><Button onClick={() => expand(props)}>{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button></Centered>
     }
     {props.expanded && props.kids.map(kid => <Kid key={kid.id} {...kid} />)}
   </Comment>

@@ -46,13 +46,15 @@ const Details = styled.div`
 `
 
 const CommentsLink = styled(Link)`
-  border-right: 1px solid ${colors.border};
-  padding-right: 4px;
-  margin-right: 4px;
+  padding: 4px 12px;
+  margin-left: 12px;
   font-weight: bold;
+  border-radius: 4px;
+  background: ${colors.border};
   color: ${colors.lightText};
   &:hover {
-    color: ${colors.primary};
+    background: ${colors.primary};
+    color: white;
   }
 `
 
@@ -77,7 +79,7 @@ const List = props =>
             : <Headline as={Link} to={`/item/${item.id}`}>{item.title}</Headline>
           }
           <Sitename>{item.url && new URL(item.url).hostname}</Sitename>
-          <Details>{item.descendants !== undefined && <CommentsLink to={`/item/${item.id}`}>{item.descendants} {item.descendants === 1 ? 'Comment' : 'Comments'}</CommentsLink>}{timeSince(new Date(item.time * 1000))} ago<span>{item.by}</span></Details>
+          <Details>{timeSince(new Date(item.time * 1000))} ago<span>{item.by}</span>{item.descendants !== undefined && <CommentsLink to={`/item/${item.id}`}>{item.descendants} {item.descendants === 1 ? 'Comment' : 'Comments'}</CommentsLink>}</Details>
         </div>
       </ListItem>
     )}
