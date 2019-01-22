@@ -3,11 +3,19 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import Title from 'components/title'
-import Spinner from 'components/spinner'
+import Loader from 'components/loader'
 import {publish} from 'store'
 import {colors} from 'styles/variables'
 import {timeSince} from 'utils/time'
 import {getFeed, paginate, hydrate} from 'utils/api-client'
+import {
+  Headline,
+  Capsule,
+  Sitename,
+  ListItem,
+  Button,
+  Centered
+} from 'styles/mixins'
 
 const ops = {
   IDLE: 'IDLE',
@@ -20,85 +28,6 @@ const Wrapper = styled.div`
   width: 100%;
   position: relative;
   padding: 8px;
-`
-
-const Overlay = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-`
-
-const ListItem = styled.div`
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 8px 0;
-  border-bottom: 1px solid ${colors.border};
-  display: flex;
-  &:last-of-type {
-    border-bottom: none;
-  }
-`
-
-const More = styled(Link)`
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  margin-bottom: 60px;
-  border: 1px solid rgba(0,0,0,.18);
-  color: ${colors.dark};
-  display: block;
-  padding: 16px 32px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 1px 1px rgba(0,0,0,.08);
-  margin-top: 24px;
-  &:hover {
-    background: rgba(0,0,0,.02);
-  }
-  &:active {
-    background: rgba(0,0,0,.06);
-  }
-`
-
-const Headline = styled.a`
-  color: ${colors.dark};
-  font-size: 18px;
-  font-weight: 500;
-  padding: 4px 0;
-  margin: 4px 0;
-  display: inline-block;
-
-  @media (min-width: 960px) {
-    font-size: 24px;
-  }
-  &:hover {
-    color: ${colors.lightText};
-  }
-`
-
-const Capsule = styled.strong`
-  font-weight: 500;
-  color: ${colors.light};
-  background: ${colors.primary};
-  padding: 2px 6px;
-  border-radius: 10px;
-  position: relative;
-  top: 10px;
-  font-size: 10px;
-  margin-right: 8px;
-  min-width: 34px;
-  display: block;
-  text-align: center;
-  @media (min-width: 960px) {
-    top: 14px;
-  }
 `
 
 const Details = styled.div`
@@ -116,26 +45,44 @@ const Details = styled.div`
   }
 `
 
+const CommentsLink = styled(Link)`
+  border-right: 1px solid ${colors.border};
+  padding-right: 4px;
+  margin-right: 4px;
+  font-weight: bold;
+  color: ${colors.lightText};
+  &:hover {
+    color: ${colors.primary};
+  }
+`
+
+const Label = styled.span`
+  font-size: 14px;
+  color: ${colors.lightText};
+  text-transform: uppercase;
+  font-weight: bold;
+`
+
 const List = props =>
   <Wrapper>
+    <ListItem><Label>Page {Number(props.number) + 1}</Label></ListItem>
     {props.items.map(item =>
       <ListItem key={item.id}>
         <div>
           <Capsule>{item.score}</Capsule>
         </div>
         <div>
-          <Headline href={item.url}>{item.title}</Headline>
-          <Details>Posted by <strong>{item.by}</strong> {timeSince(new Date(item.time * 1000))} ago. <span>{item.url && new URL(item.url).hostname}</span></Details>
+          {item.url
+            ? <Headline href={item.url}>{item.title}</Headline>
+            : <Headline as={Link} to={`/item/${item.id}`}>{item.title}</Headline>
+          }
+          <Sitename>{item.url && new URL(item.url).hostname}</Sitename>
+          <Details>{item.descendants !== undefined && <CommentsLink to={`/item/${item.id}`}>{item.descendants} {item.descendants === 1 ? 'Comment' : 'Comments'}</CommentsLink>}{timeSince(new Date(item.time * 1000))} ago<span>{item.by}</span></Details>
         </div>
       </ListItem>
     )}
-    <More to={`/${props.page}/${Number(props.number) + 1}`}>More</More>
+    <Centered><Button as={Link} to={`/${props.page}/${Number(props.number) + 1}`}>More</Button></Centered>
   </Wrapper>
-
-const Loader = () =>
-  <Overlay>
-    <Spinner />
-  </Overlay>
 
 class Feed extends Component {
   componentDidMount () {
@@ -153,25 +100,21 @@ class Feed extends Component {
       return publish('Change Data Source', {
         page,
         number,
-        isLoading: true,
+        isLoadingFeed: true,
         op: page !== this.props.page ? ops.FETCHING : ops.HYDRATING
       })
     }
 
     if (this.props.op === ops.FETCHING) {
-      return Promise.resolve().then(() => {
-        publish('Begin Fetch', {op: ops.IDLE})
-        console.log('fetching')
-        return getFeed(page)
-      }).then(resp => {
+      publish('Begin Fetch', {op: ops.IDLE})
+      return getFeed(page).then(resp => {
         publish('Set Feed', {feed: resp.body, op: ops.HYDRATING})
       }).catch(handleError)
     } else if (this.props.op === ops.HYDRATING) {
       publish('Begin Hydrate', {op: ops.IDLE})
       const segment = paginate(this.props.feed, number)
-      console.log(segment, 'hydrating')
       return hydrate(segment)
-        .then(resp => publish('populate', {items: resp, isLoading: false}))
+        .then(resp => publish('populate', {items: resp, isLoadingFeed: false}))
         .catch(handleError)
     }
   }
@@ -180,7 +123,7 @@ class Feed extends Component {
     return (
       <Wrapper>
         <Title>Newshack</Title>
-        {this.props.isLoading
+        {this.props.isLoadingFeed
           ? <Loader />
           : <List {...this.props} />
         }
@@ -192,7 +135,7 @@ class Feed extends Component {
 export default connect(state => ({
   page: state.page || null,
   number: state.number || 0,
-  isLoading: state.isLoading || false,
+  isLoadingFeed: state.isLoadingFeed || false,
   op: state.op || ops.IDLE,
   feed: state.feed || null,
   items: state.items || []

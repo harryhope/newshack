@@ -3,6 +3,7 @@ export const colors = {
   dark: '#242424',
   primary: '#50C4ED',
   border: '#E6E4E4',
+  darkBorder: '#DDD',
   lightText: '#606060',
   lighterText: '#888'
 }

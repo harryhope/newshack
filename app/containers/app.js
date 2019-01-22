@@ -4,6 +4,7 @@ import styled, {createGlobalStyle} from 'styled-components'
 import styledNormalize from 'styled-normalize'
 import Nav from 'components/nav'
 import Feed from 'containers/feed'
+import Item from 'containers/item'
 import Error from 'containers/error'
 import {colors, fonts} from 'styles/variables'
 
@@ -36,6 +37,10 @@ const Wrapper = styled.div`
   position: relative;
 `
 
+const Footer = styled.footer`
+  padding-bottom: 60px;
+`
+
 const App = () =>
   <Wrapper>
     <GlobalStyle />
@@ -45,6 +50,11 @@ const App = () =>
         exact
         path='/'
         render={() => <Redirect to='/top' />}
+      />
+      <Route
+        exact
+        path='/item/:id'
+        component={Item}
       />
       {[
         '/:page(top|new|show|ask|job)',
@@ -61,6 +71,7 @@ const App = () =>
         component={Error}
       />
     </Switch>
+    <Footer />
   </Wrapper>
 
 export default App
