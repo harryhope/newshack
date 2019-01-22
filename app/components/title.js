@@ -6,7 +6,7 @@ class Title extends React.Component {
   }
 
   componentWillUnmount () {
-    document.title = 'Reactor'
+    document.title = 'Newshack'
   }
 
   render () {
