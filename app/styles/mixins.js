@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {colors} from 'styles/variables'
 
 export const Headline = styled.a`
@@ -72,4 +72,7 @@ export const Button = styled.button`
   &:active {
     background: ${colors.darkBorder};
   }
+  ${props => props.wide && css`
+    padding: 12px 128px;
+  `}
 `

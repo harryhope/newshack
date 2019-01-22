@@ -1,8 +1,9 @@
 import {isObject} from 'lodash'
 import React, {Component} from 'react'
+import u from 'updeep'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
-import {publish} from 'store'
+import {store, publish} from 'store'
 import {hydrate} from 'utils/api-client'
 import Loader from 'components/loader'
 import {timeSince} from 'utils/time'
@@ -61,14 +62,54 @@ const Text = styled.div`
   margin: 8px 0;
 `
 
+const recursivelyHydrate = current => {
+  const item = Object.assign({}, current)
+  return hydrate(item.kids).then(kids => {
+    const promises = kids.map(kid => {
+      if (kid.kids) {
+        return recursivelyHydrate(kid)
+      } else {
+        return null
+      }
+    }).filter(item => !!item)
+
+    return Promise.all(promises).then(filledKids => {
+      item.kids = filledKids
+      item.expanded = true
+      return item
+    })
+  })
+}
+
+const expand = props => {
+  recursivelyHydrate(props).then(item => {
+    const state = store.getState()
+    const kids = state.item.kids.map(current => {
+      const kid = Object.assign({}, current)
+      if (kid.id === item.id) {
+        kid.kids = item.kids
+        kid.expanded = true
+      }
+      return kid
+    })
+    publish('Expand Comments', {
+      item: {
+        kids: u.constant(kids)
+      }
+    })
+  })
+}
+
 const Kid = props =>
   <Comment>
     <Byline><strong>{props.by}</strong> <span>{timeSince(new Date(props.time * 1000))} ago.</span></Byline>
     <Text dangerouslySetInnerHTML={{__html: props.text}}></Text>
     {props.kids && !props.expanded && props.kids.length > 0
-      && <Centered><Button>{props.kids.length} Replies</Button></Centered>
+      && <Centered><Button onClick={() => expand(props)}>{props.kids.length} Replies</Button></Centered>
     }
+    {props.expanded && props.kids.map(kid => <Kid key={kid.id} {...kid} />)}
   </Comment>
+
 
 
 const ItemView = props =>
