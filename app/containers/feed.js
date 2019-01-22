@@ -81,7 +81,7 @@ const List = props =>
         </div>
       </ListItem>
     )}
-    <Centered><Button as={Link} to={`/${props.page}/${Number(props.number) + 1}`}>More</Button></Centered>
+    <Centered><Button wide as={Link} to={`/${props.page}/${Number(props.number) + 1}`}>More</Button></Centered>
   </Wrapper>
 
 class Feed extends Component {
