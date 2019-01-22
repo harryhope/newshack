@@ -12,7 +12,6 @@ import {
   Headline,
   Capsule,
   Sitename,
-  ListItem,
   Button,
   Centered
 } from 'styles/mixins'
@@ -103,14 +102,12 @@ const expand = props => {
 const Kid = props =>
   <Comment>
     <Byline><strong>{props.by}</strong> <span>{timeSince(new Date(props.time * 1000))} ago.</span></Byline>
-    <Text dangerouslySetInnerHTML={{__html: props.text}}></Text>
-    {props.kids && !props.expanded && props.kids.length > 0
-      && <Centered><Button onClick={() => expand(props)}>{props.kids.length} Replies</Button></Centered>
+    <Text dangerouslySetInnerHTML={{__html: props.text}} />
+    {props.kids && !props.expanded && props.kids.length > 0 &&
+      <Centered><Button onClick={() => expand(props)}>{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button></Centered>
     }
     {props.expanded && props.kids.map(kid => <Kid key={kid.id} {...kid} />)}
   </Comment>
-
-
 
 const ItemView = props =>
   <Wrapper>
@@ -137,9 +134,9 @@ class Item extends Component {
   componentDidMount () {
     publish('Load Item', {isLoadingItem: true})
     const {id} = this.props.match.params
-    hydrate([id]).then(([item]) => (
+    hydrate([id]).then(([item]) =>
       Promise.all([item, hydrate(item.kids)])
-    )).then(([item, kids]) => {
+    ).then(([item, kids]) => {
       item.kids = kids
       publish('Finish Loading Item', {
         item,
@@ -151,11 +148,11 @@ class Item extends Component {
   render () {
     return (
       <Wrapper>
-      {this.props.isLoadingItem
-        ? <Loader />
-        : <ItemView {...this.props} />
-      }
-    </Wrapper>
+        {this.props.isLoadingItem
+          ? <Loader />
+          : <ItemView {...this.props} />
+        }
+      </Wrapper>
     )
   }
 }
