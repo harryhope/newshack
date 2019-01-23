@@ -30,8 +30,10 @@ const Wrapper = styled.header`
     display: inline-flex;
     align-items: center;
   }
-  a:hover {
-    background: rgba(0,0,0,.3);
+  @media (min-width: 960px) {
+    a:hover {
+      background: rgba(0,0,0,.3);
+    }
   }
 `
 

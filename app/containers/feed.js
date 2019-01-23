@@ -40,21 +40,19 @@ const Details = styled.div`
       font-size: 11px;
       color: ${colors.lighterText};
       border-left: 1px solid ${colors.border};
-      padding-left: 4px;
-      margin-left: 4px;
+      border-right: 1px solid ${colors.border};
+      padding: 0 4px;
+      margin: 0 4px;
   }
 `
 
 const CommentsLink = styled(Link)`
-  padding: 4px 12px;
-  margin-left: 12px;
+  padding: 4px;
   font-weight: bold;
-  border-radius: 4px;
-  background: ${colors.border};
   color: ${colors.lightText};
+  font-size: 12px;
   &:hover {
-    background: ${colors.primary};
-    color: white;
+    color: ${colors.lighterText};
   }
 `
 

@@ -38,7 +38,7 @@ const Wrapper = styled.div`
 `
 
 const Footer = styled.footer`
-  padding-bottom: 60px;
+  padding-bottom: 40px;
 `
 
 const App = () =>
