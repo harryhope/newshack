@@ -1,5 +1,10 @@
 # 🗞 newshack 💻 
-Just another hacker news client.
+Newshack is just another hacker news client. It's a single-page React application that reads from the [official HN API](https://github.com/HackerNews/API) and is designed to work right in [GitHub Pages](https://pages.github.com). I built it because I wanted a simple, aesthetically pleasing way to read [hacker news](https://news.ycombinator.com), especially on mobile.
+
+[You can see it here.](https://harryhope.github.io/newshack)
+
+#### Here's what it looks like:
+<img width="400" alt="screen shot 2019-01-22 at 11 49 00 pm" src="https://user-images.githubusercontent.com/2415156/51583829-6800e300-1ea0-11e9-85ca-261b3bc7a3c4.png">
 
 ## Getting Started
 Clone the repository and make sure you have `node` installed.
