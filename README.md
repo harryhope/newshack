@@ -10,6 +10,7 @@ To run a development server with hot module reloading type:
 ```
 npm run dev
 ```
+Once you run this command, Newshack will be available at `localhost:3000/newshack`. The app will hot reload in-browser as you save your changes.
 
 To build and minify a production-ready version:
 ```
@@ -38,3 +39,6 @@ For a visualization of the projects dependencies and their size (both uncompress
 npm run profile
 ```
 This is a good way to understand the impact libraries have on file size and load time.
+
+## Deploying
+Newshack is designed to be deployed on [GitHub Pages](https://pages.github.com). The `gh-pages` branch of this repo contains built js checked in to the repo. To deploy, simply merge `master` into `gh-pages`, run `npm run build`, and then commit and push the changes from `gh-pages` to GitHub.
