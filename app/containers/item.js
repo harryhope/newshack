@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import {store, publish} from 'store'
 import {hydrate} from 'utils/api-client'
 import Loader from 'components/loader'
+import Spinner from 'components/spinner'
 import {timeSince} from 'utils/time'
 import {colors} from 'styles/variables'
 import {
@@ -13,6 +14,7 @@ import {
   Capsule,
   Sitename,
   Button,
+  SpinnerWrapper,
   Centered
 } from 'styles/mixins'
 
@@ -81,6 +83,7 @@ const recursivelyHydrate = current => {
 }
 
 const expand = props => {
+  publish('Load Comments', {kidLoading: props.id})
   recursivelyHydrate(props).then(item => {
     const state = store.getState()
     const kids = state.item.kids.map(current => {
@@ -93,7 +96,8 @@ const expand = props => {
     })
     publish('Expand Comments', {
       item: {
-        kids: u.constant(kids)
+        kids: u.constant(kids),
+        kidLoading: null
       }
     })
   })
@@ -104,7 +108,7 @@ const Kid = props =>
     <Byline><strong>{props.by}</strong> <span>{timeSince(new Date(props.time * 1000))} ago.</span></Byline>
     <Text dangerouslySetInnerHTML={{__html: props.text}} />
     {props.kids && !props.expanded && props.kids.length > 0 &&
-      <Centered><Button onClick={() => expand(props)}>{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button></Centered>
+      <Centered><Button onClick={() => expand(props)}>{props.id === props.kidLoading && <SpinnerWrapper><Spinner neutral /></SpinnerWrapper>}{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button></Centered>
     }
     {props.expanded && props.kids.map(kid => <Kid key={kid.id} {...kid} />)}
   </Comment>
@@ -125,7 +129,7 @@ const ItemView = props =>
     {props.item.kids && props.item.kids
       .filter(isObject)
       .map(kid =>
-        <Kid key={kid.id} {...kid} />
+        <Kid key={kid.id} kidLoading={props.kidLoading} {...kid} />
       )
     }
   </Wrapper>
@@ -159,5 +163,6 @@ class Item extends Component {
 
 export default connect(state => ({
   isLoadingItem: state.isLoadingItem || false,
-  item: state.item || {}
+  item: state.item || {},
+  kidLoading: state.kidLoading || null
 }))(Item)
