@@ -69,10 +69,24 @@ export const Button = styled.button`
   color: ${colors.lightText};
   font-weight: 600;
   border: none;
+  position: relative;
   &:active {
     background: ${colors.darkBorder};
   }
   ${props => props.wide && css`
     padding: 12px 128px;
   `}
+`
+
+export const SpinnerWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: ${colors.border};
+  border-radius: 6px
 `

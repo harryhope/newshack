@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {colors} from 'styles/variables'
 
 const Spinner = styled.div`
@@ -11,6 +11,9 @@ const Spinner = styled.div`
   animation-duration: .6s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+  ${props => props.neutral && css`
+    border-top-color: ${colors.lighterText};
+  `}
   @keyframes spin {
     from {
         transform: rotate(0deg);
