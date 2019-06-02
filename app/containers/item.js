@@ -2,7 +2,7 @@ import {isObject} from 'lodash'
 import React, {Component} from 'react'
 import u from 'updeep'
 import {connect} from 'react-redux'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {store, publish} from 'store'
 import {hydrate} from 'utils/api-client'
 import Loader from 'components/loader'
@@ -50,6 +50,9 @@ const Comment = styled.div`
     color: ${colors.lightText};
     text-decoration: underline;
   }
+  ${props => props.noIndent && css`
+    padding: 16px 0;
+  `}
 `
 
 const Byline = styled.aside`
@@ -104,13 +107,15 @@ const expand = props => {
 }
 
 const Kid = props =>
-  <Comment>
+  <Comment noIndent={props.level > 2}>
     <Byline><strong>{props.by}</strong> <span>{timeSince(new Date(props.time * 1000))} ago.</span></Byline>
     <Text dangerouslySetInnerHTML={{__html: props.text}} />
     {props.kids && !props.expanded && props.kids.length > 0 &&
-      <Centered><Button onClick={() => expand(props)}>{props.id === props.kidLoading && <SpinnerWrapper><Spinner neutral /></SpinnerWrapper>}{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button></Centered>
+      <Centered><Button onClick={() =>
+        expand(props)}>{props.id === props.kidLoading && <SpinnerWrapper><Spinner neutral /></SpinnerWrapper>}{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button>
+      </Centered>
     }
-    {props.expanded && props.kids.map(kid => <Kid key={kid.id} {...kid} />)}
+    {props.expanded && props.kids.map(kid => <Kid level={props.level ? props.level + 1 : 1} key={kid.id} {...kid} />)}
   </Comment>
 
 const ItemView = props =>
