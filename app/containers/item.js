@@ -2,10 +2,11 @@ import {isObject} from 'lodash'
 import React, {Component} from 'react'
 import u from 'updeep'
 import {connect} from 'react-redux'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {store, publish} from 'store'
 import {hydrate} from 'utils/api-client'
 import Loader from 'components/loader'
+import Spinner from 'components/spinner'
 import {timeSince} from 'utils/time'
 import {colors} from 'styles/variables'
 import {
@@ -13,6 +14,7 @@ import {
   Capsule,
   Sitename,
   Button,
+  SpinnerWrapper,
   Centered
 } from 'styles/mixins'
 
@@ -48,6 +50,14 @@ const Comment = styled.div`
     color: ${colors.lightText};
     text-decoration: underline;
   }
+  ${props => props.noIndent && css`
+    padding: 16px 0;
+  `}
+`
+
+const Padder = styled.div`
+  padding-left: 42px;
+  padding-bottom: 16px;
 `
 
 const Byline = styled.aside`
@@ -81,6 +91,7 @@ const recursivelyHydrate = current => {
 }
 
 const expand = props => {
+  publish('Load Comments', {kidLoading: props.id})
   recursivelyHydrate(props).then(item => {
     const state = store.getState()
     const kids = state.item.kids.map(current => {
@@ -93,20 +104,23 @@ const expand = props => {
     })
     publish('Expand Comments', {
       item: {
-        kids: u.constant(kids)
+        kids: u.constant(kids),
+        kidLoading: null
       }
     })
   })
 }
 
 const Kid = props =>
-  <Comment>
+  <Comment noIndent={props.level > 2}>
     <Byline><strong>{props.by}</strong> <span>{timeSince(new Date(props.time * 1000))} ago.</span></Byline>
     <Text dangerouslySetInnerHTML={{__html: props.text}} />
     {props.kids && !props.expanded && props.kids.length > 0 &&
-      <Centered><Button onClick={() => expand(props)}>{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button></Centered>
+      <Centered><Button onClick={() =>
+        expand(props)}>{props.id === props.kidLoading && <SpinnerWrapper><Spinner neutral /></SpinnerWrapper>}{props.kids.length} {props.kids.length === 1 ? 'Reply' : 'Replies'}</Button>
+      </Centered>
     }
-    {props.expanded && props.kids.map(kid => <Kid key={kid.id} {...kid} />)}
+    {props.expanded && props.kids.map(kid => <Kid level={props.level ? props.level + 1 : 1} key={kid.id} {...kid} />)}
   </Comment>
 
 const ItemView = props =>
@@ -121,11 +135,16 @@ const ItemView = props =>
           <Sitename>{props.item.url && new URL(props.item.url).hostname}</Sitename>
         </div>
       </Inner>
+      {props.item.text &&
+        <Inner>
+          <Padder dangerouslySetInnerHTML={{__html: props.item.text}} />
+        </Inner>
+      }
     </Outer>
     {props.item.kids && props.item.kids
       .filter(isObject)
       .map(kid =>
-        <Kid key={kid.id} {...kid} />
+        <Kid key={kid.id} kidLoading={props.kidLoading} {...kid} />
       )
     }
   </Wrapper>
@@ -139,7 +158,7 @@ class Item extends Component {
     ).then(([item, kids]) => {
       item.kids = kids
       publish('Finish Loading Item', {
-        item,
+        item: u.constant(item),
         isLoadingItem: false
       })
     })
@@ -159,5 +178,6 @@ class Item extends Component {
 
 export default connect(state => ({
   isLoadingItem: state.isLoadingItem || false,
-  item: state.item || {}
+  item: state.item || {},
+  kidLoading: state.kidLoading || null
 }))(Item)

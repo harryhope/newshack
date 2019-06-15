@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -66,7 +67,7 @@ const Label = styled.span`
 const List = props =>
   <Wrapper>
     <ListItem><Label>Page {Number(props.number) + 1}</Label></ListItem>
-    {props.items.map(item =>
+    {props.items.filter(item => _.isObject(item)).map(item =>
       <ListItem key={item.id}>
         <div>
           <Capsule>{item.score}</Capsule>
@@ -81,7 +82,7 @@ const List = props =>
         </div>
       </ListItem>
     )}
-    <Centered><Button wide as={Link} to={`/${props.page}/${Number(props.number) + 1}`}>More</Button></Centered>
+    <Centered><Button wide='true' as={Link} to={`/${props.page}/${Number(props.number) + 1}`}>More</Button></Centered>
   </Wrapper>
 
 class Feed extends Component {
