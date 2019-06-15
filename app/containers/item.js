@@ -55,6 +55,11 @@ const Comment = styled.div`
   `}
 `
 
+const Padder = styled.div`
+  padding-left: 42px;
+  padding-bottom: 16px;
+`
+
 const Byline = styled.aside`
   padding-bottom: 16px;
   span {
@@ -130,6 +135,11 @@ const ItemView = props =>
           <Sitename>{props.item.url && new URL(props.item.url).hostname}</Sitename>
         </div>
       </Inner>
+      {props.item.text &&
+        <Inner>
+          <Padder dangerouslySetInnerHTML={{__html: props.item.text}} />
+        </Inner>
+      }
     </Outer>
     {props.item.kids && props.item.kids
       .filter(isObject)
@@ -148,7 +158,7 @@ class Item extends Component {
     ).then(([item, kids]) => {
       item.kids = kids
       publish('Finish Loading Item', {
-        item,
+        item: u.constant(item),
         isLoadingItem: false
       })
     })
