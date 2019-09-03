@@ -74,7 +74,7 @@ const List = props =>
         </div>
         <div>
           {item.url
-            ? <Headline href={item.url}>{item.title}</Headline>
+            ? <Headline href={item.url} target='_blank'>{item.title}</Headline>
             : <Headline as={Link} to={`/item/${item.id}`}>{item.title}</Headline>
           }
           <Sitename>{item.url && new URL(item.url).hostname}</Sitename>
@@ -97,25 +97,42 @@ class Feed extends Component {
   updateSource () {
     const {page, number = 0} = this.props.match.params
     const handleError = () => publish('Err', {op: ops.ERRORING})
+
+    console.log('POPULATING')
     if (page !== this.props.page || number !== this.props.number) {
+      const cache = window.sessionStorage.getItem(`cache:${page}:${number}`)
+      if (cache && this.props.op === ops.IDLE && _.isEmpty(this.props.items)) {
+        console.log('loading from cache')
+        publish('populate', {items: JSON.parse(cache), isLoadingFeed: false})
+      }
+
       return publish('Change Data Source', {
         page,
         number,
-        isLoadingFeed: true,
+        isLoadingFeed: !cache,
         op: page !== this.props.page ? ops.FETCHING : ops.HYDRATING
       })
     }
 
     if (this.props.op === ops.FETCHING) {
+      console.log('FETCHING')
       publish('Begin Fetch', {op: ops.IDLE})
       return getFeed(page).then(resp => {
         publish('Set Feed', {feed: resp.body, op: ops.HYDRATING})
       }).catch(handleError)
     } else if (this.props.op === ops.HYDRATING) {
+      console.log('HYDRATING')
       publish('Begin Hydrate', {op: ops.IDLE})
       const segment = paginate(this.props.feed, number)
       return hydrate(segment)
-        .then(resp => publish('populate', {items: resp, isLoadingFeed: false}))
+        .then(resp => {
+          publish('populate', {items: resp, isLoadingFeed: false})
+          return resp
+        })
+        .then(resp => window.sessionStorage.setItem(
+          `cache:${page}:${number}`,
+          JSON.stringify(resp)
+        ))
         .catch(handleError)
     }
   }
