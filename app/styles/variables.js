@@ -1,11 +1,16 @@
 export const colors = {
   light: '#FFF',
+  offWhite: '#ccc',
   dark: '#242424',
+  darker: '#111',
   primary: '#50C4ED',
+  primaryDark: '#1769E4',
   border: '#E6E4E4',
   darkBorder: '#DDD',
   lightText: '#606060',
-  lighterText: '#888'
+  lighterText: '#888',
+  mediumText: '#bbb',
+  darkText: '#aaa'
 }
 
 export const fonts = {

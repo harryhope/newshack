@@ -15,6 +15,13 @@ export const Headline = styled.a`
   &:hover {
     color: ${colors.lightText};
   }
+
+  @media (prefers-color-scheme: dark) {
+    color: ${colors.light};
+    &:hover {
+      color: ${colors.offWhite};
+    }
+  }
 `
 
 export const Capsule = styled.strong`
@@ -33,6 +40,9 @@ export const Capsule = styled.strong`
   @media (min-width: 960px) {
     top: 14px;
   }
+  @media (prefers-color-scheme: dark) {
+    background: ${colors.primaryDark};
+  }
 `
 
 export const Sitename = styled.div`
@@ -41,6 +51,9 @@ export const Sitename = styled.div`
   color: ${colors.lighterText};
   margin-top: -4px;
   margin-bottom: 16px;
+  @media (prefers-color-scheme: dark) {
+    color: ${colors.mediumText};
+  }
 `
 
 export const ListItem = styled.div`
@@ -52,6 +65,9 @@ export const ListItem = styled.div`
   display: flex;
   &:last-of-type {
     border-bottom: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    border-color: ${colors.lightText};
   }
 `
 
@@ -76,6 +92,13 @@ export const Button = styled.button`
   ${props => props.wide && css`
     padding: 12px 128px;
   `}
+  @media (prefers-color-scheme: dark) {
+    background: ${colors.lightText};
+    color: ${colors.dark};
+    &:active {
+      background: ${colors.lighterText};
+    }
+  }
 `
 
 export const SpinnerWrapper = styled.div`
@@ -89,4 +112,7 @@ export const SpinnerWrapper = styled.div`
   left: 0;
   background: ${colors.border};
   border-radius: 6px
+  @media (prefers-color-scheme: dark) {
+    background: ${colors.lighterText};
+  }
 `

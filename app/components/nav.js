@@ -23,6 +23,9 @@ const Wrapper = styled.header`
   left: 0;
   z-index: 1;
   font-size: 14px;
+  @media (prefers-color-scheme: dark) {
+    background: ${colors.darker};
+  }
   a {
     color: ${colors.light};
     padding: 0 8px;

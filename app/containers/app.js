@@ -20,7 +20,11 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     font-family: ${fonts.sans};
     font-size: 16px;
-    color: ${colors.dark}
+    color: ${colors.dark};
+    @media (prefers-color-scheme: dark) {
+      color: ${colors.light};
+      background: ${colors.dark};
+    }
   }
 
   *, *:before, *:after {
