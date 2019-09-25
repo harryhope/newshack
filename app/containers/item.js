@@ -26,6 +26,9 @@ const Outer = styled.div`
   width: 100%;
   border-bottom: 1px solid ${colors.border};
   padding: 16px 0 8px;
+  @media (prefers-color-scheme: dark) {
+    border-color: ${colors.lightText};
+  }
 `
 const Inner = styled.div`
   padding: 0 16px;
@@ -37,6 +40,9 @@ const Inner = styled.div`
 const Comment = styled.div`
   font-size: 15px;
   border-bottom: 1px solid ${colors.border};
+  @media (prefers-color-scheme: dark) {
+    border-color: ${colors.lightText};
+  }
   padding: 16px 24px;
   width: 100%;
   word-wrap: break-word;

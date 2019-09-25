@@ -45,6 +45,13 @@ const Details = styled.div`
       padding: 0 4px;
       margin: 0 4px;
   }
+  @media (prefers-color-scheme: dark) {
+    color: ${colors.mediumText};
+    span {
+      border-color: ${colors.lightText};
+      color: ${colors.darkText};
+    }
+  }
 `
 
 const CommentsLink = styled(Link)`
@@ -55,6 +62,9 @@ const CommentsLink = styled(Link)`
   &:hover {
     color: ${colors.lighterText};
   }
+  @media (prefers-color-scheme: dark) {
+    color: ${colors.mediumText};
+  }
 `
 
 const Label = styled.span`
@@ -62,6 +72,9 @@ const Label = styled.span`
   color: ${colors.lightText};
   text-transform: uppercase;
   font-weight: bold;
+  @media (prefers-color-scheme: dark) {
+    color: ${colors.light};
+  }
 `
 
 const List = props =>
